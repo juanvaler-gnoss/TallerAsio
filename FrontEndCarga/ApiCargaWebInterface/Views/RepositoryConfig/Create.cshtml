@@ -1,0 +1,60 @@
+﻿@model ApiCargaWebInterface.ViewModels.RepositoryConfigViewModel
+
+@{
+    bool editar = Model != null && !Model.RepositoryConfigID.Equals(Guid.Empty);
+    string action = "Create";
+    if (!editar)
+    {
+        ViewData["Title"] = "Crear repositorio";
+    }
+    else
+    {
+        ViewData["Title"] = Model.Name + " - Editar repositorio";
+        action = "Edit";
+    }
+    ViewData["BodyClass"] = "formulario";
+}
+    <div class="row">
+        <div class="col col-12 col-lg-12 col-contenido">
+            <div class="wrapCol">
+                <form asp-action="@action">
+                    <div class="fieldset fieldset01">
+                        <fieldset class="mediumLabels">
+                            <h1>Crear repositorio</h1>
+                            <div class="fieldsetContent">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <p hidden>
+                                    <label asp-for="RepositoryConfigID" class="control-label"></label>
+                                    <input asp-for="RepositoryConfigID" class="form-control" />
+                                    <span asp-validation-for="RepositoryConfigID" class="text-danger"></span>
+                                </p>
+                                <p>
+                                    <label asp-for="Name" class="control-label"></label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </p>
+                                <p>
+                                    <label asp-for="OauthToken" class="control-label"></label>
+                                    <input asp-for="OauthToken" class="form-control" />
+                                    <span asp-validation-for="OauthToken" class="text-danger"></span>
+                                </p>
+                                <p>
+                                    <label asp-for="Url" class="control-label"></label>
+                                    <input asp-for="Url" class="form-control" />
+                                    <span asp-validation-for="Url" class="text-danger"></span>
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="fieldset actionButtons fieldset03">
+                        <fieldset>
+                            <p>
+                                <input class="submit principal" type="submit" value="Crear">
+                            </p>
+                        </fieldset>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>

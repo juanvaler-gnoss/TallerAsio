@@ -1,0 +1,47 @@
+﻿@model ApiCargaWebInterface.ViewModels.ShapeConfigViewModel
+
+@{
+    ViewData["Title"] = Model.Name + " - Shape";
+    ViewData["BodyClass"] = "fichaRecurso";
+}
+
+<div class="row">
+    <div class="col col-12 col-lg-12 col-contenido">
+        <div class="wrapCol">
+            <div class="header-resource">
+                <div class="h1-container">
+                    <h1>@Model.Name</h1>
+                    <div class="botones">
+                        <ul>
+                            <li>
+                                <a href="@Url.Action("Edit", "ShapeConfig", new {  id=Model.ShapeConfigID  })" class="btn btn-editar">Editar</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Delete", "ShapeConfig", new {  id=Model.ShapeConfigID  })" class="btn btn-eliminar">Eliminar</a>
+                            </li>
+                        </ul>   
+                    </div>
+                </div>
+            </div>
+            <div class="contenido">
+                <div class="grupo grupo-descripcion">
+                    <div class="identifier">
+                        <p class="titulo">Identifier</p>
+                        <p>@Model.ShapeConfigID</p>
+                    </div>
+                    <div class="outh-token">
+                        <p class="titulo">Repositorio</p>
+                        <p>@Model.RepositoryID</p>
+                    </div>
+                    <div class="outh-token">
+                        <p class="titulo">Shape</p>
+                        <a href="@Url.Action("Download", "ShapeConfig", new {  id=Model.ShapeConfigID  })" class="btn-mas-recursos"><i class="material-icons">attachment</i>Descargar</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

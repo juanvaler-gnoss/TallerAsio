@@ -1,0 +1,107 @@
+@model ApiCargaWebInterface.ViewModels.CmsDataViewModel
+@using Newtonsoft.Json
+@using CsvHelper
+@using System.Globalization
+@using System.IO
+@using System.Text
+@{
+    Layout = "_Layout";
+    ViewData["BodyClass"] = "fichaRecurso";
+    string resultApi = Model.Results.FirstOrDefault();
+    List<JobPage> resultObject = JsonConvert.DeserializeObject<List<JobPage>>(resultApi);
+    var jobs = resultObject.Where(item => item.ExecutedAt.HasValue).OrderByDescending(item => item.ExecutedAt.Value).Take(2);
+	
+    string resultSparql = Model.Results[1];
+    byte[] byteArray = Encoding.UTF8.GetBytes(resultSparql);
+    MemoryStream stream = new MemoryStream(byteArray);
+    var csvReader = new CsvReader(new StreamReader(stream), CultureInfo.InvariantCulture);
+    var records = csvReader.GetRecords<PruebaSparql>();
+}
+@*<% api https://localhost:44359/Job?type=0&count=100&from=0 /%>*@
+@*<% sparql
+    select ?type count(?s) as ?count
+    where
+    {
+     ?s rdf:type ?type
+     }
+     group by ?type
+    /%>*@
+<div class="row">
+    <div class="col col-12 col-lg-12 col-contenido">
+        <div class="wrapCol">
+            <div class="row">
+                <div class="col col-12 col-lg-12 col-contenido">
+                    <div class="wrapCol">
+                        <h1>Dos últimas tareas ejecutadas</h1>
+                        <div class="contenido">
+                            <div class="grupo grupo-descripcion">
+                                <div class="items tabla">
+                                    <div class="cabecera">
+                                        <div class="columna">
+                                            <p>Identificador</p>
+                                        </div>
+                                        <div class="columna">
+                                            <p>Fecha de ejecución</p>
+                                        </div>
+                                    </div>
+                                    @foreach (var job in jobs)
+                                    {
+                                        <div class="fila">
+                                            <div class="columna principal">
+                                                <p>@job.Id</p>
+                                            </div>
+                                            <div class="columna">
+                                                <p>@job.ExecutedAt.Value</p>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+						<h1>Número de entidades por tipo</h1>
+                        <div class="contenido">
+                            <div class="grupo grupo-descripcion">
+                                <div class="items tabla">
+                                    <div class="cabecera">
+                                        <div class="columna">
+                                            <p>Type</p>
+                                        </div>
+                                        <div class="columna">
+                                            <p>Count</p>
+                                        </div>
+                                    </div>
+                                    @foreach (var fila in records)
+                                    {
+                                        <div class="fila">
+                                            <div class="columna principal">
+                                                <p>@fila.type</p>
+                                            </div>
+                                            <div class="columna">
+                                                <p>@fila.count</p>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@functions{
+    public class JobPage
+    {
+        public string Job { get; set; }
+        public string State { get; set; }
+        public string Id { get; set; }
+        public string ExceptionDetails { get; set; }
+        public DateTime? ExecutedAt { get; set; }
+    }
+	public class PruebaSparql
+    {
+        public string type { get; set; }
+        public int count { get; set; }
+    }
+}
