@@ -1,0 +1,2 @@
+/public/gnossdeustobackend/home
+/Views/Shared/_menupersonalizado.cshtml
