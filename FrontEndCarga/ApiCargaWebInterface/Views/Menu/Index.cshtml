@@ -1,0 +1,58 @@
+﻿@model ApiCargaWebInterface.ViewModels.PageViewModel
+
+@{
+    if(Model != null)
+    {
+        ViewData["Title"] = Model.RouteProxyLess;
+    }
+
+    ViewData["BodyClass"] = "fichaRecurso";
+}
+
+<div class="row">
+    <div class="col col-12 col-lg-12 col-contenido">
+        <div class="wrapCol">
+            <div class="header-resource">
+            </div>
+            <div class="contenido">
+                @if (Model != null)
+                {
+                    <div class="grupo grupo-descripcion">
+                        <div class="identifier">
+                            <p class="titulo">Identifier</p>
+                            <p>@Model.PageId</p>
+                        </div>
+                        <div class="outh-token">
+                            <p class="titulo">Route</p>
+                            <p><a href="@Model.Route">@Model.RouteProxyLess</a></p>
+                        </div>
+                        <div class="outh-token">
+                            <p class="titulo">Html de la vista</p>
+                            <a href="@Url.Action("DownloadHtml")" class="btn-mas-recursos"><i class="material-icons">attachment</i>Descargar</a>
+                        </div>
+                    </div>
+                }
+                <form asp-action="SetMenu" method="post" enctype="multipart/form-data">
+                    <div class="fieldset fieldset01">
+                        <fieldset class="mediumLabels">
+                            <h1>Subir nuevo Menú</h1>
+                            <div class="fieldsetContent">
+                                <p>
+                                    <label name="menu_personalizado" class="control-label"></label>
+                                    <input type="file" name="menu_personalizado" class="form-control" />
+                                </p>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="fieldset actionButtons fieldset03">
+                        <fieldset>
+                            <p>
+                                <input class="submit principal" type="submit" value="Guardar">
+                            </p>
+                        </fieldset>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
