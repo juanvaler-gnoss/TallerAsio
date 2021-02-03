@@ -1,0 +1,20 @@
+coverage: 
+  status:
+    project:
+      default: off
+      documentacion:
+        target: auto
+        flags:
+          - documentacion
+comment:
+  layout: "reach, diff, flags, files"
+  behavior: default
+  require_changes: false
+  require_base: yes
+  require_head: yes
+  branches: null
+flags:
+  documentacion:
+    paths:
+      - GestorDocumentacion/
+    carryforward: false
